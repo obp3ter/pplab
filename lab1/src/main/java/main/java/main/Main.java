@@ -13,11 +13,11 @@ public class Main {
     /**
      * The number of sales to be generated
      */
-    static final int SALES = 1000000;
+    static final int SALES = 4000000;
     /**
      * If the bills queue and the money to be blocking when checking
      */
-    static final boolean BILL_LOCKING = false;
+    static final boolean BILL_LOCKING = true;
     /**
      * Minimum number of each item to be sold
      */
