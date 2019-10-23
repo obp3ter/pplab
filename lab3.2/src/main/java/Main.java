@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 
@@ -21,7 +20,7 @@ public class Main {
     private static final boolean add = true;
     private static final boolean multiply = true;
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+    public static void main(String[] args) throws InterruptedException {
 
         Integer[][] m1 = new Integer[size1][size2];
         Integer[][] m2 = new Integer[size3][size4];
@@ -69,10 +68,9 @@ public class Main {
 
                 List<Future<ArrayList<Pair<Pair<Integer, Integer>, Integer>>>> results = executorService.invokeAll(adders);
 
-                results.parallelStream().map(arrayListFuture -> {
+                results.stream().map(arrayListFuture -> {
                     try {
-                        ArrayList<Pair<Pair<Integer, Integer>, Integer>> pairs = arrayListFuture.get();
-                        return pairs;
+                        return arrayListFuture.get();
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                         return new ArrayList<Pair<Pair<Integer,Integer>,Integer>>();

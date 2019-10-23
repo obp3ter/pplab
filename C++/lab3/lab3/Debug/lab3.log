@@ -1,0 +1,10 @@
+﻿  lab3.cpp
+  Unknown compiler version - please run the configure tests and report the results
+c:\users\obp3t\ideaprojects\pplab\c++\lab3\lab3\lab3.cpp(100): warning C4018: '<': signed/unsigned mismatch
+c:\users\obp3t\ideaprojects\pplab\c++\lab3\lab3\lab3.cpp(106): warning C4018: '<': signed/unsigned mismatch
+c:\users\obp3t\ideaprojects\pplab\c++\lab3\lab3\lab3.cpp(135): warning C4018: '<': signed/unsigned mismatch
+c:\users\obp3t\ideaprojects\pplab\c++\lab3\lab3\lab3.cpp(141): warning C4018: '<': signed/unsigned mismatch
+c:\users\obp3t\ideaprojects\pplab\c++\lab3\lab3\lab3.cpp(173): warning C4018: '<': signed/unsigned mismatch
+c:\users\obp3t\ideaprojects\pplab\c++\lab3\lab3\lab3.cpp(181): warning C4018: '<': signed/unsigned mismatch
+c:\users\obp3t\ideaprojects\pplab\c++\lab3\lab3\lab3.cpp(186): warning C4018: '<': signed/unsigned mismatch
+  lab3.vcxproj -> C:\Users\ObP3t\IdeaProjects\pplab\C++\lab3\Debug\lab3.exe
