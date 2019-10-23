@@ -1,6 +1,14 @@
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -13,7 +21,7 @@ public class Main {
     private static final boolean add = true;
     private static final boolean multiply = true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 
         Integer[][] m1 = new Integer[size1][size2];
         Integer[][] m2 = new Integer[size3][size4];
@@ -57,17 +65,34 @@ public class Main {
                     adders.add(new Adder(m1,m2,m_result, adder_lists.get(i)));
                 }
 
-                ArrayList<Thread> threads = new ArrayList<>();
+                ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-                adders.forEach( adder -> threads.add(new Thread(adder)));
-                threads.forEach(Thread::run);
-                for (Thread thread : threads) {
+                List<Future<ArrayList<Pair<Pair<Integer, Integer>, Integer>>>> results = executorService.invokeAll(adders);
+
+                results.parallelStream().map(arrayListFuture -> {
                     try {
-                        thread.join();
-                    } catch (InterruptedException e) {
+                        ArrayList<Pair<Pair<Integer, Integer>, Integer>> pairs = arrayListFuture.get();
+                        return pairs;
+                    } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
+                        return new ArrayList<Pair<Pair<Integer,Integer>,Integer>>();
                     }
-                }
+
+                }).map(Collection::stream).flatMap(i -> i).collect(Collectors.toList())
+                        .forEach(posval -> m_result[posval.getValue0().getValue0()][posval.getValue0().getValue1()]=posval.getValue1());
+
+
+//                ArrayList<Thread> threads = new ArrayList<>();
+//
+//                adders.forEach( adder -> threads.add(new Thread(adder)));
+//                threads.forEach(Thread::run);
+//                for (Thread thread : threads) {
+//                    try {
+//                        thread.join();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
 
 //        for (int i = 0; i < size5; i++) {
 //            for (int j = 0; j < size6; j++) {
@@ -75,7 +100,7 @@ public class Main {
 //            }
 //            System.out.print("\n");
 //        }
-                System.out.println("Added in:" + ((System.nanoTime() - start) / 1000000)+" ms "+nrthreads+" Threads");
+                System.out.println("Added in:" + ((System.nanoTime() - start) / 5000000)+" ms "+nrthreads+" Threads");
             }
         }
 
@@ -116,17 +141,30 @@ public class Main {
                     multipliers.add(new Multiplier(m1,m2,m_result, multiplier_list.get(i)));
                 }
 
-                ArrayList<Thread> threads = new ArrayList<>();
+                ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-                multipliers.forEach( adder -> threads.add(new Thread(adder)));
-                threads.forEach(Thread::run);
-                for (Thread thread : threads) {
+                List<Future<ArrayList<Pair<Pair<Integer, Integer>, Integer>>>> results = executorService.invokeAll(multipliers);
+
+               results.stream().map(arrayListFuture -> {
                     try {
-                        thread.join();
-                    } catch (InterruptedException e) {
+                        return arrayListFuture.get();
+                    } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
-                }
+                    return new ArrayList<Pair<Pair<Integer,Integer>,Integer>>();
+                }).map(Collection::stream).flatMap(i -> i).collect(Collectors.toList())
+                       .forEach(posval -> m_result[posval.getValue0().getValue0()][posval.getValue0().getValue1()]=posval.getValue1());
+//                ArrayList<Thread> threads = new ArrayList<>();
+//
+//                multipliers.forEach( adder -> threads.add(new Thread(adder)));
+//                threads.forEach(Thread::run);
+//                for (Thread thread : threads) {
+//                    try {
+//                        thread.join();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
 
 //        for (int i = 0; i < size5; i++) {
 //            for (int j = 0; j < size6; j++) {
@@ -134,7 +172,7 @@ public class Main {
 //            }
 //            System.out.print("\n");
 //        }
-                System.out.println("Multiplied in:" + ((System.nanoTime() - start) / 1000000)+" ms "+nrthreads+" Threads");
+                System.out.println("Multiplied in:" + ((System.nanoTime() - start) / 5000000)+" ms "+nrthreads+" Threads");
             }
         }
 

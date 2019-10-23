@@ -1,9 +1,10 @@
 import org.javatuples.Pair;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.stream.IntStream;
 
-public class Multiplier implements Runnable {
+public class Multiplier implements Callable<Object> {
     private Integer[][] m1;
     private Integer[][] m2;
     private Integer[][] m_result;
@@ -16,10 +17,12 @@ public class Multiplier implements Runnable {
         this.positions = positions;
     }
 
+
     @Override
-    public void run() {
+    public Object call() throws Exception {
         positions.forEach(position -> {
             m_result[position.getValue0()][position.getValue1()] = IntStream.range(0, m1[0].length).map(i -> m1[position.getValue0()][i] * m2[i][position.getValue1()]).sum();
         });
+        return null;
     }
 }
