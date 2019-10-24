@@ -1,2 +1,3 @@
 # Project exclude paths
-/lab1/target/
+**/target/**
+**/target/

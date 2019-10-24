@@ -90,13 +90,13 @@ public class Main{
 //                    }
 //                }
 
-        for (int i = 0; i < size5; i++) {
-            for (int j = 0; j < size6; j++) {
-                System.out.print(m_result[i][j]+"\t");
-            }
-            System.out.print("\n");
-        }
-                System.out.println("Added in:" + ((System.nanoTime() - start) / 5000000)+" ms "+nrthreads+" Threads");
+//        for (int i = 0; i < size5; i++) {
+//            for (int j = 0; j < size6; j++) {
+//                System.out.print(m_result[i][j]+"\t");
+//            }
+//            System.out.print("\n");
+//        }
+                System.out.println("Added in:" + ((System.nanoTime() - start) / 1000000)+" ms "+nrthreads+" Threads");
             }
         }
 
@@ -128,8 +128,6 @@ public class Main{
                 }
 
                 positions.forEach(p -> multiplier_list.get(positions.indexOf(p)%nrthreads).add(positions.get(positions.indexOf(p))));
-
-//            adder_lists.get(0).forEach(pair -> System.out.println(pair.getValue0() + " " + pair.getValue1()));
 
                 ArrayList<Multiplier> multipliers = new ArrayList<>();
 

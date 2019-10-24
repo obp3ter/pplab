@@ -26,6 +26,7 @@
         <module>lab3</module>
         <module>lab3.2</module>
         <module>lab4</module>
+        <module>lab3.x</module>
     </modules>
 
     <dependencies>
