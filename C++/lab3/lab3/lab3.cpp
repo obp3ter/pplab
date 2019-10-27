@@ -10,7 +10,7 @@
 #include <future>
 
 
-#define size1 50
+#define size1 100
 
 int m1[size1][size1], m2[size1][size1], mresult[size1][size1];
 
@@ -71,14 +71,19 @@ vector<pair<pair<int,int>, int>> multiplier2(vector<pair<int, int>>  pos) {
 
 int main()
 {
-	bool non_async = false;
+	bool non_async = true;
 	bool asyncb = true;
+	long avg = 0;
+	int it = 250;
 
 	if (non_async) {
-		for (int ii = 1; ii < size1*size1 + 1; ++ii)
+
+		avg = 0;
+
+		for (int ii = 0; ii < it; ++ii)
 		{
 			auto start = chrono::high_resolution_clock::now();
-			int nrthreads = ii;
+			int nrthreads = size1*size1;
 
 			vector<pair<int, int>> positions;
 			vector<vector<pair<int, int>>> adder_positions;
@@ -108,12 +113,17 @@ int main()
 				p.push(adder1, adder_positions[i]);
 			}
 			p.stop();
-			cout << "Added in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			//std::cout << "Added in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			avg += (std::chrono::high_resolution_clock::now() - start).count() / 1000000;
 		}
-		for (int ii = 1; ii < size1*size1 + 1; ++ii)
+		std::cout << "Addition avg of "<<it<<" runs "<<avg / it << endl;
+
+		avg = 0;
+
+		for (int ii = 0; ii < it; ++ii)
 		{
 			auto start = chrono::high_resolution_clock::now();
-			int nrthreads = ii;
+			int nrthreads = size1 * size1;
 
 			vector<pair<int, int>> positions;
 			vector<vector<pair<int, int>>> adder_positions;
@@ -143,15 +153,18 @@ int main()
 				p.push(multiplier1, adder_positions[i]);
 			}
 			p.stop();
-			cout << "Multiplied in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			//std::cout << "Multiplied in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			avg += (std::chrono::high_resolution_clock::now() - start).count() / 1000000;
 		}
+		std::cout << "Multiplication avg. of "<<it<<" runs " << avg / it << endl;
 	}
 	if(asyncb)
 	{
-		for (int ii = 1; ii < size1*size1 + 1; ++ii)
+		avg = 0;
+		for (int ii = 0; ii < it; ++ii)
 		{
 			auto start = chrono::high_resolution_clock::now();
-			int nrthreads = ii;
+			int nrthreads = size1 * size1;
 
 			vector<pair<int, int>> positions;
 			vector<vector<pair<int, int>>> adder_positions;
@@ -188,12 +201,17 @@ int main()
 				for (auto var : partresult)
 					mresult[var.first.first][var.first.second] = var.second;
 			}
-			cout << "Added in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			//std::cout << "Added in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			avg += (std::chrono::high_resolution_clock::now() - start).count() / 1000000;
 		}
-		for (int ii = 1; ii < size1*size1 + 1; ++ii)
+		std::cout << "Addition avg of " << it << " runs " << avg / it << endl;
+
+		avg = 0;
+
+		for (int ii = 0; ii < it; ++ii)
 		{
 			auto start = chrono::high_resolution_clock::now();
-			int nrthreads = ii;
+			int nrthreads = size1 * size1;
 
 			vector<pair<int, int>> positions;
 			vector<vector<pair<int, int>>> adder_positions;
@@ -230,8 +248,10 @@ int main()
 				for (auto var : partresult)
 					mresult[var.first.first][var.first.second] = var.second;
 			}
-			cout << "Multiplied in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			//std::cout << "Multiplied in " << (std::chrono::high_resolution_clock::now() - start).count() / 1000000 << " ms " << nrthreads << " threads" << endl;
+			avg += (std::chrono::high_resolution_clock::now() - start).count() / 1000000;
 		}
+		std::cout << "Multiplication avg. of " << it << " runs " << avg / it << endl;
 	}
 	/*for (int i = 0; i < size1; ++i) {
 		for (int j = 0; j < size1; ++j)

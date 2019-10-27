@@ -6,12 +6,12 @@ import java.util.concurrent.Executors;
 
 public class Main {
 
-    private static final int size1 = 50;
-    private static final int size2 = 50;
-    private static final int size3 = 50;
-    private static final int size4 = 50;
-    private static final int size5 = 50;
-    private static final int size6 = 50;
+    private static final int size1 = 100;
+    private static final int size2 = 100;
+    private static final int size3 = 100;
+    private static final int size4 = 100;
+    private static final int size5 = 100;
+    private static final int size6 = 100;
     private static final boolean add = true;
     private static final boolean multiply = true;
 
@@ -20,6 +20,9 @@ public class Main {
         Integer[][] m1 = new Integer[size1][size2];
         Integer[][] m2 = new Integer[size3][size4];
         Integer[][] m_result = new Integer[size5][size6];
+
+        long avg = 0;
+        long it = 250;
 
         if(add){
             if(size1!=size3 || size1!=size5 ||size2!=size4||size2!=size6)
@@ -30,9 +33,9 @@ public class Main {
 
 
 
-            for (int ii = 1; ii < size5*size6+1; ii++) {
+            for (int ii = 0; ii < it; ii++) {
                 long start = System.nanoTime();
-                int nrthreads = ii;
+                int nrthreads = size5*size6;
 
                 ArrayList<Pair<Integer,Integer>> positions = new ArrayList<>();
                 ArrayList<ArrayList<Pair<Integer,Integer>>> adder_lists = new ArrayList<>();
@@ -63,27 +66,13 @@ public class Main {
 
                 executorService.invokeAll(adders);
 
-//                ArrayList<Thread> threads = new ArrayList<>();
-//
-//                adders.forEach( adder -> threads.add(new Thread(adder)));
-//                threads.forEach(Thread::run);
-//                for (Thread thread : threads) {
-//                    try {
-//                        thread.join();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-
-//        for (int i = 0; i < size5; i++) {
-//            for (int j = 0; j < size6; j++) {
-//                System.out.print(m_result[i][j]+"\t");
-//            }
-//            System.out.print("\n");
-//        }
-                System.out.println("Added in:" + ((System.nanoTime() - start) / 1000000)+" ms "+nrthreads+" Threads");
+//                System.out.println("Multiplied in:" + ((System.nanoTime() - start) / 5000000) + " ms " + nrthreads + " Threads");
+                avg+=((System.nanoTime() - start) / 1000000);
             }
+            System.out.println("Addition avg. of "+it+" runs: "+avg/it);
         }
+
+        avg=0;
 
         if(multiply)
         {
@@ -93,9 +82,9 @@ public class Main {
                 return;
             }
 
-            for (int ii = 1; ii < size5*size6+1; ii++) {
+            for (int ii = 0; ii < it; ii++) {
                 long start = System.nanoTime();
-                int nrthreads = ii;
+                int nrthreads = size5*size6;
 
                 ArrayList<Pair<Integer,Integer>> positions = new ArrayList<>();
                 ArrayList<ArrayList<Pair<Integer,Integer>>> multiplier_list = new ArrayList<>();
@@ -114,7 +103,6 @@ public class Main {
 
                 positions.forEach(p -> multiplier_list.get(positions.indexOf(p)%nrthreads).add(positions.get(positions.indexOf(p))));
 
-//            adder_lists.get(0).forEach(pair -> System.out.println(pair.getValue0() + " " + pair.getValue1()));
 
                 ArrayList<Multiplier> multipliers = new ArrayList<>();
 
@@ -126,26 +114,10 @@ public class Main {
 
                 executorService.invokeAll(multipliers);
 
-//                ArrayList<Thread> threads = new ArrayList<>();
-//
-//                multipliers.forEach( adder -> threads.add(new Thread(adder)));
-//                threads.forEach(Thread::run);
-//                for (Thread thread : threads) {
-//                    try {
-//                        thread.join();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-
-//        for (int i = 0; i < size5; i++) {
-//            for (int j = 0; j < size6; j++) {
-//                System.out.print(m_result[i][j]+"\t");
-//            }
-//            System.out.print("\n");
-//        }
-                System.out.println("Multiplied in:" + ((System.nanoTime() - start) / 1000000)+" ms "+nrthreads+" Threads");
+//                System.out.println("Multiplied in:" + ((System.nanoTime() - start) / 5000000) + " ms " + nrthreads + " Threads");
+                avg+=((System.nanoTime() - start) / 1000000);
             }
+            System.out.println("Multiplication avg. of "+it+" runs: "+avg/it);
         }
 
     }
