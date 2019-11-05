@@ -20,7 +20,7 @@ public class Main{
     public static void main(String[] args) throws InterruptedException {
 
         long avg=0;
-        int it =250;
+        int it =25;
 
         Integer[][] m1 = new Integer[size1][size2];
         Integer[][] m2 = new Integer[size3][size4];

@@ -5,14 +5,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class Main {
-    private static final int size1 = 100;
-    private static final int size2 = 100;
-    private static final int size3 = 100;
-    private static final int size4 = 100;
-    private static final int size5 = 100;
-    private static final int size6 = 100;
-    private static final boolean add = true;
-    private static final boolean multiply = false;
+    private static final int size1 = 500;
+    private static final int size2 = 500;
+    private static final int size3 = 500;
+    private static final int size4 = 500;
+    private static final int size5 = 500;
+    private static final int size6 = 500;
+    private static final boolean add = false;
+    private static final boolean multiply = true;
 
     public static void main(String[] args) {
 
@@ -43,7 +43,7 @@ public class Main {
 
             if(multiply)
             {
-                IntStream.range(0,size5).map(i->IntStream.range(0,size6)
+                IntStream.range(0,size5).parallel().map(i->IntStream.range(0,size6).parallel()
                         .map(j->m_result[i][j] = IntStream.range(0,size4)
                                 .map(k->m1[i][k]*m2[k][j]).sum()).sum()).toArray();
             }
@@ -55,7 +55,7 @@ public class Main {
 //            System.out.println("\n");
 //        }
 
-//            System.out.println("Added in:" + ((System.nanoTime() - start) / 2500000)+" ms ");
+//            System.out.println("Added in:" + ((System.nanoTime() - start) / 1000000)+" ms ");
             avg+= ((System.nanoTime() - start) );
 
         }

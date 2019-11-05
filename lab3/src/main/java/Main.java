@@ -22,7 +22,7 @@ public class Main {
         Integer[][] m_result = new Integer[size5][size6];
 
         long avg = 0;
-        long it = 250;
+        long it = 25;
 
         if(add){
             if(size1!=size3 || size1!=size5 ||size2!=size4||size2!=size6)

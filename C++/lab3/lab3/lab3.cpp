@@ -74,7 +74,7 @@ int main()
 	bool non_async = true;
 	bool asyncb = true;
 	long avg = 0;
-	int it = 250;
+	int it = 25;
 
 	if (non_async) {
 
