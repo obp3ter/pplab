@@ -28,6 +28,8 @@
         <module>lab4</module>
         <module>lab3.x</module>
         <module>lab6</module>
+        <module>lab7</module>
+        <module>lab7.2</module>
     </modules>
 
     <dependencies>

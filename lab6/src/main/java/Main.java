@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 public class Main {
-    private static final int length=(int)Math.pow(2,17);
+    private static final int length=(int)Math.pow(2,10);
     public static void main(String[] args) throws Exception {
 
         System.out.println(length);
