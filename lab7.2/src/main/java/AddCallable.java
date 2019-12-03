@@ -33,6 +33,12 @@ public class AddCallable implements Callable<Integer> {
         queueIN1=splitNumberInQueueIN(number,queueIN1);
     }
 
+    AddCallable(ArrayBlockingQueue<BigInteger> queueIN1, ArrayBlockingQueue<BigInteger> queueIN2, ArrayBlockingQueue<BigInteger> queueOUT){
+        this.queueIN1=queueIN1;
+        this.queueIN2=queueIN2;
+        this.queueOUT=queueOUT;
+    }
+
 
     @Override
     public Integer call() throws Exception {

@@ -30,6 +30,7 @@
         <module>lab6</module>
         <module>lab7</module>
         <module>lab7.2</module>
+        <module>lab8</module>
     </modules>
 
     <dependencies>
